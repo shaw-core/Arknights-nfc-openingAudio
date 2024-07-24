@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Playing Audio...</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+        #playButton {
+            padding: 20px;
+            font-size: 20px;
+            background-color: #ccc;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            display: none;
+        }
+        #playButton:hover {
+            background-color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <button id="playButton">Click to Play Audio</button>
+    <audio id="audioPlayer" autoplay muted>
+        <source src="kmx_not_your_master.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var audio = document.getElementById('audioPlayer');
+            var playButton = document.getElementById('playButton');
+
+            function attemptPlay() {
+                audio.play().then(() => {
+                    audio.muted = false;
+                }).catch(error => {
+                    console.error('Playback failed:', error);
+                    playButton.style.display = 'block';
+                });
+            }
+
+            attemptPlay();
+
+            window.addEventListener('focus', attemptPlay);
+
+            setTimeout(attemptPlay, 1000);
+        });
+    </script>
+</body>
+</html>
